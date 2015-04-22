@@ -10,9 +10,6 @@ Pulling from several lists
 
 Some example problems:
   - http://algorithmsandme.com/problem-list-for-interview/
-  
-Interesting links:
-  - http://sorting.at/
 
 <h2>Algorithms:</h2>
   - Selection Sort
