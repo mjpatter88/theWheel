@@ -16,32 +16,96 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
+    /// <summary>
+    /// Class to generate and hold sets of test data
+    /// </summary>
+    class TestData
+    {
+        private int[] data;
+        private Random rand;
+        private int size;
+
+        /// <summary>
+        /// Constructs a new TestData with the given size.
+        /// </summary>
+        /// <param name="size"></param>
+        public TestData(int size)
+        {
+            rand = new Random();
+            data = new int[size];
+            this.size = size;
+            generateData();
+        }
+
+        /// <summary>
+        /// Generates new test data
+        /// </summary>
+        public void generateData()
+        {
+            for (int i = 0; i < size; i++)
+            {
+                data[i] = rand.Next(Int16.MaxValue);
+            }
+        }
+
+        /// <summary>
+        /// Gets the test data
+        /// </summary>
+        /// <returns></returns>
+        public int[] getData()
+        {
+            return data;
+        }
+    }
+
     class MainClass
     {
-        /* 
-         * Main entry point of this solution.
-         */
+        /// <summary>
+        /// Main entry point of this solution
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         static int Main(String[] args)
         {
-            int[] numbers = {5, 3, -10, 7, 4, 5, 14};
+            //Use some common powers of 2
+            long[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
+                           1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
+                           2107374182, 4147483648, 4294967296}; //2^30 - 2^32
 
-            System.Console.Write("Pre-sorted array: ");
-            PrintArray(numbers);
-            System.Console.WriteLine("Selection Sorting...");
+            //TODO: For each sort to be tested, loop through using the previous array of sizes. Once a test takes over a minute, then stop looping.
+            int size = 50000;
+            TestData data = new TestData(size);
+            int[] numbers = data.getData();
+            System.Console.WriteLine("Size of test data: " + size);
+
+            /**************************************************** Selection Sort *********************************************/
+            System.Console.WriteLine("Selection Sorting................................");
+
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
             SelectionSort(numbers);
-            System.Console.Write("Post-sorted array: "); 
-            PrintArray(numbers);
+            sw.Stop();
+
+            if (!IsSorted(numbers))
+            {
+                System.Console.WriteLine("Array was not successfully sorted!");
+                return 1;
+            }
+            System.Console.WriteLine("Time elapsed: " + sw.ElapsedMilliseconds + " milliseconds.");
+
+            /**************************************************** Insertion Sort *********************************************/
+            /**************************************************** Bubble Sort *********************************************/
+            /**************************************************** Heap Sort *********************************************/
+            /**************************************************** Quick Sort *********************************************/
 
             System.Console.Read();
             return 0;
         }
 
-
-        /*
-         * Sort the array using the common Selection Sort algorithm.
-         * http://en.wikipedia.org/wiki/Selection_sort
-         * 
-         */
+        /// <summary>
+        /// Sort the array using the common Selection Sort algorithm.
+        /// http://en.wikipedia.org/wiki/Selection_sort
+        /// </summary>
+        /// <param name="arr"></param>
         static void SelectionSort(int[] arr)
         {
             // Loop through the entire list finding the next smallest element each time
@@ -71,13 +135,24 @@ namespace Sorting
         {
 
         }
+
+        static void HeapSort(int[] arr)
+        {
+
+        }
+
+        static void QuickSort(int[] arr)
+        {
+
+        }
         
 
-        /************************************** Util Functions ****************************************/
-        /*
-         * Swap two numbers in an array.
-         * 
-         */
+        /// <summary>
+        /// Swap two numbers in an array.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
         static void SwapNums(int[] arr, int index1, int index2)
         {
             if(index1 > arr.Length || index1 < 0)
@@ -101,10 +176,35 @@ namespace Sorting
             return;
         }
 
-        /*
-         * Prints an integer array
-         * 
-         */
+        /// <summary>
+        /// Returns true if an array is sorted, false otherwise.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        static bool IsSorted(int[] arr)
+        {
+            if(arr.Length < 1)
+            {
+                //An empty array is always sorted.
+                return true;
+            }
+            int num1 = arr[0];
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i] < num1)
+                {
+                    return false;
+                }
+                num1 = arr[i];
+            }
+            //If we make it to here, we know it is sorted
+            return true;
+        }
+
+        /// <summary>
+        /// Prints an integer array
+        /// </summary>
+        /// <param name="arr"></param>
         static void PrintArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
@@ -117,6 +217,5 @@ namespace Sorting
             }
             System.Console.WriteLine();
         }
-
     }
 }
