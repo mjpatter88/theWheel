@@ -23,13 +23,13 @@ namespace Sorting
     {
         private int[] data;
         private Random rand;
-        private int size;
+        private long size;
 
         /// <summary>
         /// Constructs a new TestData with the given size.
         /// </summary>
         /// <param name="size"></param>
-        public TestData(int size)
+        public TestData(long size)
         {
             rand = new Random();
             data = new int[size];
@@ -56,6 +56,21 @@ namespace Sorting
         {
             return data;
         }
+
+        public int[] getCopyOfData(long size)
+        {
+            if(size < 0)
+            {
+                System.Console.WriteLine("Cannot get negative data.");
+                return new int[0];
+            }
+            int[] ret = new int[size];
+            for (int i = 0; i < size; i++)
+            {
+                ret[i] = data[i];
+            }
+            return ret;
+        }
     }
 
     class MainClass
@@ -70,27 +85,35 @@ namespace Sorting
             //Use some common powers of 2
             long[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
-                           2107374182, 4147483648, 4294967296}; //2^30 - 2^32
+                           107374182}; //2^30 and max size possible (close to 2^31)
+            TestData data = new TestData(sizes[sizes.Length-1]); //Generate all the needed data first
 
-            //TODO: For each sort to be tested, loop through using the previous array of sizes. Once a test takes over a minute, then stop looping.
-            int size = 50000;
-            TestData data = new TestData(size);
-            int[] numbers = data.getData();
-            System.Console.WriteLine("Size of test data: " + size);
 
-            /**************************************************** Selection Sort *********************************************/
-            System.Console.WriteLine("Selection Sorting................................");
-
-            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
-            SelectionSort(numbers);
-            sw.Stop();
-
-            if (!IsSorted(numbers))
+            /**************************************************** Selection Sort Testing *********************************************/
+            //For each sort to be tested, loop through using the previous array of sizes. Once a test takes over a minute, then stop looping.
+            for (int i = 0; i < sizes.Length; i++)
             {
-                System.Console.WriteLine("Array was not successfully sorted!");
-                return 1;
+                int[] numbers = data.getCopyOfData(sizes[i]);
+                System.Console.WriteLine("Size of test data: " + sizes[i]);
+                System.Console.WriteLine("Selection Sorting................................");
+
+                System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+                SelectionSort(numbers);
+                sw.Stop();
+
+                if (!IsSorted(numbers))
+                {
+                    System.Console.WriteLine("Array was not successfully sorted!");
+                    return 1;
+                }
+                System.Console.WriteLine("Time elapsed: " + sw.ElapsedMilliseconds + " milliseconds.");
+                if (sw.ElapsedMilliseconds > 1000 * 60 && i > 0)
+                {
+                    System.Console.WriteLine("Maximum elements sorted in under 1 minute: " + sizes[i - 1]);
+                    break;
+                }
+
             }
-            System.Console.WriteLine("Time elapsed: " + sw.ElapsedMilliseconds + " milliseconds.");
 
             /**************************************************** Insertion Sort *********************************************/
             /**************************************************** Bubble Sort *********************************************/
