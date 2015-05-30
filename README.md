@@ -1,5 +1,5 @@
 # theWheel
-Reinventing algorithms and data structures
+Reinventing algorithms and data structures for fun and education.
 
 Pulling from several lists
   - https://www.topcoder.com/community/data-science/data-science-tutorials/
@@ -18,7 +18,6 @@ Interesting links:
   - Selection Sort
   - Insertion Sort
   - Bubble Sort
-  - Heapsort
   - Merge Sort
   - Quicksort
   - Prime Testing
