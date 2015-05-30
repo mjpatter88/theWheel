@@ -85,12 +85,13 @@ namespace Sorting
         /// <returns></returns>
         public static int Main(String[] args)
         {
+            //In order to allocate arrays of this size, we need to set the gcAllowVeryLargeObjects flag in the App.config file. 
             //Use some common powers of 2
             int[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
                            1073741824}; //2^30
             //Generate all the needed data first
-            TestData data = new TestData(sizes[sizes.Length-1]); 
+            TestData data = new TestData(sizes[sizes.Length-1]);
 
             //Configure which sorting methods to test
             List<Sorter> testSuite = new List<Sorter>();
@@ -106,7 +107,6 @@ namespace Sorting
             }
 
             // TODO:
-            // Merge Sort 
             // Quick Sort 
 
             // Wait for user input to close the command shell.
