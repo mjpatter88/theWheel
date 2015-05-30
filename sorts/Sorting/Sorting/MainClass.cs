@@ -228,7 +228,72 @@ namespace Sorting
         /// <param name="arr"></param>
         public static void MergeSort(int[] arr)
         {
+            int[] newArr = recMergeSort(arr, 0, arr.Length);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = newArr[i];
+            }
+        }
+        
+        /// <summary>
+        /// A recurisve helper method to do the actual merge sort.
+        /// Create temp arrays along the way and return them.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        private static int[] recMergeSort(int[] arr, int start, int end)
+        {
+            // start is inclusive, end is non-inclusive.
+            int size = end - start;
 
+            // It should never be 0 or negative
+            if(size <= 0)
+            {
+                throw new System.ArgumentException("Can't sort an array of 0 elements.");
+            }
+
+            // If there is only a single element, it's already sorted.
+            if(size == 1)
+            {
+                int[] toReturn = new int[size];
+                toReturn[0] = arr[start];
+                return toReturn;
+            }
+
+            // Find the middle (auto floor function) and make recursive calls on each half
+            int mid = start + (end - start) / 2;
+            int[] leftSide = recMergeSort(arr, start, mid);
+            int[] rightSide = recMergeSort(arr, mid, end);
+
+            // Create a new array to merge into and then return
+            int[] retArr = new int[size];
+
+            int leftIndex = 0;
+            int rightIndex = 0;
+            for (int index = 0; index < size; index++)
+            {
+                if(rightIndex >= rightSide.Length )
+                {
+                    retArr[index] = leftSide[leftIndex];
+                    leftIndex++;
+                }
+                else if(leftIndex >= leftSide.Length)
+                {
+                    retArr[index] = rightSide[rightIndex];
+                    rightIndex++;
+                }
+                else if(leftSide[leftIndex] < rightSide[rightIndex])
+                {
+                    retArr[index] = leftSide[leftIndex];
+                    leftIndex++;
+                }
+                else
+                {
+                    retArr[index] = rightSide[rightIndex];
+                    rightIndex++;
+                }
+            }
+            return retArr;
         }
 
         public static void QuickSort(int[] arr)

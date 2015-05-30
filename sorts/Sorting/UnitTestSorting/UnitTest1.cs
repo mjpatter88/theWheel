@@ -52,6 +52,7 @@ namespace UnitTestSorting
             int[] testArr = {67, -1, 10, 4, 7, 2, 9, 3, 3, 5};
             int[] correct = {-1, 2, 3, 3, 4, 5, 7, 9, 10, 67};
             Sorting.MainClass.MergeSort(testArr);
+            Sorting.MainClass.PrintArray(testArr);
             CollectionAssert.AreEqual(correct, testArr);
         }
 
