@@ -3,7 +3,7 @@
  * - Selection Sort
  * - Insertion Sort
  * - Bubble Sort
- * - Heap Sort
+ * - Merge Sort
  * - Quick Sort
  * 
  */
@@ -19,7 +19,7 @@ namespace Sorting
     /// <summary>
     /// Class to generate and hold sets of test data
     /// </summary>
-    class TestData
+    public class TestData
     {
         private int[] data;
         private Random rand;
@@ -73,52 +73,64 @@ namespace Sorting
         }
     }
 
-    class MainClass
+    public class MainClass
     {
         //Delegate to use for whichever sort I want to run
-        delegate void Sorter(int[] arr);
+        public delegate void Sorter(int[] arr);
 
         /// <summary>
         /// Main entry point of this solution
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        static int Main(String[] args)
+        public static int Main(String[] args)
         {
             //Use some common powers of 2
             int[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
                            107374182}; //2^30
-            TestData data = new TestData(sizes[sizes.Length-1]); //Generate all the needed data first
+            //Generate all the needed data first
+            TestData data = new TestData(sizes[sizes.Length-1]); 
 
-            //Change this line to change which sort is sorted. Should I make this a cmd line switch?
-            Sorter sort = SelectionSort;
+            //Configure which sorting methods to test
+            List<Sorter> testSuite = new List<Sorter>();
+            //testSuite.Add(QuickSort);
+            testSuite.Add(MergeSort);
+            //testSuite.Add(BubbleSort);
+            //testSuite.Add(InsertionSort);
+            //testSuite.Add(SelectionSort);
 
-            System.Console.WriteLine("******************Selection Sort******************");
-            TestSort(data, sort, sizes);
+            foreach (Sorter sort in testSuite)
+            {
+                PerformSort(data, sort, sizes);
+            }
 
+            // TODO:
+            // Merge Sort 
+            // Quick Sort 
 
-
-            /**************************************************** Selection Sort Testing *********************************************/
-
-            /**************************************************** Insertion Sort *********************************************/
-            /**************************************************** Bubble Sort *********************************************/
-            /**************************************************** Heap Sort *********************************************/
-            /**************************************************** Quick Sort *********************************************/
-
+            // Wait for user input to close the command shell.
             System.Console.Read();
             return 0;
         }
 
-        static void TestSort(TestData data, Sorter sort, int[] sizes)
+        public static void PerformSort(TestData data, Sorter sort, int[] sizes)
         {
             if(data == null)
             {
                 System.Console.WriteLine("You must instantiate the test data before attempting to sort it!");
                 return;
             }
+            if(sort == null)
+            {
+                System.Console.WriteLine("You must instantiate the sorter before attempting to use it!");
+                return;
+            }
 
-            //For each sort to be tested, loop through using the previous array of sizes. Once a test takes over a minute, then stop looping.
+            //Print which sorting method we are performing
+            System.Console.WriteLine("****************************** " + sort.Method.Name + " ******************************");
+
+            // Perform the sort on arrays of increasing sizes. Once a sort takes over a minute, then stop.
             for (int i = 0; i < sizes.Length; i++)
             {
                 int[] numbers = data.getCopyOfData(sizes[i]);
@@ -136,12 +148,10 @@ namespace Sorting
                 System.Console.WriteLine("Time elapsed: " + sw.ElapsedMilliseconds + " milliseconds.");
                 if (sw.ElapsedMilliseconds > 1000 * 60 && i > 0)
                 {
-                    System.Console.WriteLine("Maximum elements sorted in under 1 minute: " + sizes[i - 1]);
+                    System.Console.WriteLine("Maximum elements sorted in under 1 minute: " + sizes[i - 1] + "\n");
                     break;
                 }
-
             }
-
         }
 
         /// <summary>
@@ -149,7 +159,7 @@ namespace Sorting
         /// http://en.wikipedia.org/wiki/Selection_sort
         /// </summary>
         /// <param name="arr"></param>
-        static void SelectionSort(int[] arr)
+        public static void SelectionSort(int[] arr)
         {
             // Loop through the entire list finding the next smallest element each time
             for (int firstIndex = 0; firstIndex < arr.Length; firstIndex++)
@@ -169,22 +179,59 @@ namespace Sorting
             }
         }
 
-        static void InsertionSort(int[] arr)
+        /// <summary>
+        /// Sort the array using the common Insertion Sort algorithm.
+        /// http://en.wikipedia.org/wiki/Insertion_sort
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void InsertionSort(int[] arr)
+        {
+            // We can treat the first element as already sorted, since an array of 1 is always sorted.
+            for (int alreadySortedIndex = 1; alreadySortedIndex < arr.Length; alreadySortedIndex++)
+            {
+                for (int insertAtIndex = 0; insertAtIndex < alreadySortedIndex; insertAtIndex++)
+                {
+                    if(arr[insertAtIndex] >= arr[alreadySortedIndex])
+                    {
+                        InsertNum(arr, alreadySortedIndex, insertAtIndex);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sort the array using the common Bubble Sort method.
+        /// http://en.wikipedia.org/wiki/Bubble_sort
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void BubbleSort(int[] arr)
+        {
+            bool swapped = true;
+            while (swapped)
+            {
+                swapped = false;
+                for (int index = 0; index < arr.Length-1; index++)
+                {
+                    if(arr[index] > arr[index+1])
+                    {
+                        SwapNums(arr, index, index+1);
+                        swapped = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sort the array using the common MergeSort method.
+        /// http://en.wikipedia.org/wiki/Merge_sort 
+        /// </summary>
+        /// <param name="arr"></param>
+        public static void MergeSort(int[] arr)
         {
 
         }
 
-        static void BubbleSort(int[] arr)
-        {
-
-        }
-
-        static void HeapSort(int[] arr)
-        {
-
-        }
-
-        static void QuickSort(int[] arr)
+        public static void QuickSort(int[] arr)
         {
 
         }
@@ -196,7 +243,7 @@ namespace Sorting
         /// <param name="arr"></param>
         /// <param name="index1"></param>
         /// <param name="index2"></param>
-        static void SwapNums(int[] arr, int index1, int index2)
+        public static void SwapNums(int[] arr, int index1, int index2)
         {
             if(index1 > arr.Length || index1 < 0)
             {
@@ -220,11 +267,46 @@ namespace Sorting
         }
 
         /// <summary>
+        /// Takes a number in the array and inserts it at a different position in the array, shifting numbers to the right as needed.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="insertAtIndex"></param>
+        /// <param name="insertFromIndex"></param>
+        public static void InsertNum(int[] arr, int insertFromIndex, int insertAtIndex)
+        {
+            if(insertAtIndex > arr.Length || insertAtIndex < 0)
+            {
+                System.Console.WriteLine("Illegal index: " + insertAtIndex.ToString() + " Array Length: " + arr.Length.ToString());
+                return;
+            }
+            if(insertFromIndex > arr.Length || insertFromIndex < 0)
+            {
+                System.Console.WriteLine("Illegal index: " + insertFromIndex.ToString() + " Array Length: " + arr.Length.ToString());
+                return;
+            }
+            if(insertAtIndex == insertFromIndex)
+            {
+                return;
+            }
+            if (insertFromIndex < insertAtIndex)
+            {
+                System.Console.WriteLine("Illegal insert operation. Must always insert from right to left." + insertFromIndex, insertAtIndex);
+                return;
+            }
+            int numToInsert = arr[insertFromIndex];
+            for (int i = insertFromIndex; i != insertAtIndex; i--)
+            {
+                arr[i] = arr[i - 1];
+            }
+            arr[insertAtIndex] = numToInsert;
+        }
+
+        /// <summary>
         /// Returns true if an array is sorted, false otherwise.
         /// </summary>
         /// <param name="arr"></param>
         /// <returns></returns>
-        static bool IsSorted(int[] arr)
+        public static bool IsSorted(int[] arr)
         {
             if(arr.Length < 1)
             {
@@ -248,7 +330,7 @@ namespace Sorting
         /// Prints an integer array
         /// </summary>
         /// <param name="arr"></param>
-        static void PrintArray(int[] arr)
+        public static void PrintArray(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
             {
