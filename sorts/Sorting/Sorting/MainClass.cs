@@ -88,7 +88,7 @@ namespace Sorting
             //Use some common powers of 2
             int[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
-                           107374182}; //2^30
+                           1073741824}; //2^30
             //Generate all the needed data first
             TestData data = new TestData(sizes[sizes.Length-1]); 
 
@@ -228,20 +228,17 @@ namespace Sorting
         /// <param name="arr"></param>
         public static void MergeSort(int[] arr)
         {
-            int[] newArr = recMergeSort(arr, 0, arr.Length);
-            for (int i = 0; i < arr.Length; i++)
-            {
-                arr[i] = newArr[i];
-            }
+            int[] mergeArray = new int[arr.Length];
+            recMergeSort(arr, 0, arr.Length, mergeArray);
         }
         
         /// <summary>
         /// A recurisve helper method to do the actual merge sort.
         /// Create temp arrays along the way and return them.
-        /// </summary>
+       /// </summary>
         /// <param name="arr"></param>
         /// <returns></returns>
-        private static int[] recMergeSort(int[] arr, int start, int end)
+        private static void recMergeSort(int[] arr, int start, int end, int[] mergeArray)
         {
             // start is inclusive, end is non-inclusive.
             int size = end - start;
@@ -255,45 +252,45 @@ namespace Sorting
             // If there is only a single element, it's already sorted.
             if(size == 1)
             {
-                int[] toReturn = new int[size];
-                toReturn[0] = arr[start];
-                return toReturn;
+                return;
             }
 
             // Find the middle (auto floor function) and make recursive calls on each half
             int mid = start + (end - start) / 2;
-            int[] leftSide = recMergeSort(arr, start, mid);
-            int[] rightSide = recMergeSort(arr, mid, end);
+            recMergeSort(arr, start, mid, mergeArray);
+            recMergeSort(arr, mid, end, mergeArray);
 
-            // Create a new array to merge into and then return
-            int[] retArr = new int[size];
-
-            int leftIndex = 0;
-            int rightIndex = 0;
+            int leftIndex = start;
+            int rightIndex = mid;
             for (int index = 0; index < size; index++)
             {
-                if(rightIndex >= rightSide.Length )
+                if(rightIndex >= end)
                 {
-                    retArr[index] = leftSide[leftIndex];
+                    mergeArray[index] = arr[leftIndex];
                     leftIndex++;
                 }
-                else if(leftIndex >= leftSide.Length)
+                else if(leftIndex >= mid)
                 {
-                    retArr[index] = rightSide[rightIndex];
+                    mergeArray[index] = arr[rightIndex];
                     rightIndex++;
                 }
-                else if(leftSide[leftIndex] < rightSide[rightIndex])
+                else if(arr[leftIndex] < arr[rightIndex])
                 {
-                    retArr[index] = leftSide[leftIndex];
+                    mergeArray[index] = arr[leftIndex];
                     leftIndex++;
                 }
                 else
                 {
-                    retArr[index] = rightSide[rightIndex];
+                    mergeArray[index] = arr[rightIndex];
                     rightIndex++;
                 }
             }
-            return retArr;
+            // Copy back into the original array
+            for (int i = start; i < end; i++)
+            {
+                arr[i] = mergeArray[i];
+            }
+            return;
         }
 
         public static void QuickSort(int[] arr)
