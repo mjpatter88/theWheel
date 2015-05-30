@@ -75,6 +75,9 @@ namespace Sorting
 
     class MainClass
     {
+        //Delegate to use for whichever sort I want to run
+        delegate void Sorter(int[] arr);
+
         /// <summary>
         /// Main entry point of this solution
         /// </summary>
@@ -83,28 +86,52 @@ namespace Sorting
         static int Main(String[] args)
         {
             //Use some common powers of 2
-            long[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
+            int[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
-                           107374182}; //2^30 and max size possible (close to 2^31)
+                           107374182}; //2^30
             TestData data = new TestData(sizes[sizes.Length-1]); //Generate all the needed data first
+
+            //Change this line to change which sort is sorted. Should I make this a cmd line switch?
+            Sorter sort = SelectionSort;
+
+            System.Console.WriteLine("******************Selection Sort******************");
+            TestSort(data, sort, sizes);
+
 
 
             /**************************************************** Selection Sort Testing *********************************************/
+
+            /**************************************************** Insertion Sort *********************************************/
+            /**************************************************** Bubble Sort *********************************************/
+            /**************************************************** Heap Sort *********************************************/
+            /**************************************************** Quick Sort *********************************************/
+
+            System.Console.Read();
+            return 0;
+        }
+
+        static void TestSort(TestData data, Sorter sort, int[] sizes)
+        {
+            if(data == null)
+            {
+                System.Console.WriteLine("You must instantiate the test data before attempting to sort it!");
+                return;
+            }
+
             //For each sort to be tested, loop through using the previous array of sizes. Once a test takes over a minute, then stop looping.
             for (int i = 0; i < sizes.Length; i++)
             {
                 int[] numbers = data.getCopyOfData(sizes[i]);
-                System.Console.WriteLine("Size of test data: " + sizes[i]);
-                System.Console.WriteLine("Selection Sorting................................");
+                System.Console.Write("Size:" + sizes[i] + "\t");
 
                 System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
-                SelectionSort(numbers);
+                sort(numbers);
                 sw.Stop();
 
                 if (!IsSorted(numbers))
                 {
                     System.Console.WriteLine("Array was not successfully sorted!");
-                    return 1;
+                    return;
                 }
                 System.Console.WriteLine("Time elapsed: " + sw.ElapsedMilliseconds + " milliseconds.");
                 if (sw.ElapsedMilliseconds > 1000 * 60 && i > 0)
@@ -115,13 +142,6 @@ namespace Sorting
 
             }
 
-            /**************************************************** Insertion Sort *********************************************/
-            /**************************************************** Bubble Sort *********************************************/
-            /**************************************************** Heap Sort *********************************************/
-            /**************************************************** Quick Sort *********************************************/
-
-            System.Console.Read();
-            return 0;
         }
 
         /// <summary>
