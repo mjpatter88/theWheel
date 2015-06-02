@@ -42,6 +42,7 @@ namespace Sorting
         /// </summary>
         public void generateData()
         {
+            System.Console.WriteLine("Generating test data...");
             for (int i = 0; i < size; i++)
             {
                 data[i] = rand.Next(Int16.MaxValue);
@@ -293,6 +294,11 @@ namespace Sorting
             return;
         }
 
+        /// <summary>
+        /// Sort the array using the common QuickSort metho.
+        /// http://en.wikipedia.org/wiki/Quick_sort
+        /// </summary>
+        /// <param name="arr"></param>
         public static void QuickSort(int[] arr)
         {
 
