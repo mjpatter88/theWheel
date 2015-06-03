@@ -15,6 +15,15 @@ namespace UnitTestSorting
             CollectionAssert.AreEqual(correct, testArr);
         }
 
+        [TestMethod]
+        public void SwapNumBaseTest()
+        {
+            int[] testArr = {1, 6, 3, 4, 5, 2, 7};
+            int[] correct = {1, 2, 3, 4, 5, 6, 7};
+            Sorting.MainClass.SwapNums(testArr, 1, 5);
+            CollectionAssert.AreEqual(correct, testArr);
+        }
+
 
 
 
@@ -51,6 +60,16 @@ namespace UnitTestSorting
         {
             int[] testArr = {67, -1, 10, 4, 7, 2, 9, 3, 3, 5};
             int[] correct = {-1, 2, 3, 3, 4, 5, 7, 9, 10, 67};
+            Sorting.MainClass.MergeSort(testArr);
+            Sorting.MainClass.PrintArray(testArr);
+            CollectionAssert.AreEqual(correct, testArr);
+        }
+
+        [TestMethod]
+        public void MergeSortOddTest()
+        {
+            int[] testArr = {67, 110, -1, 10, 4, 7, 2, 9, 3, 3, 5};
+            int[] correct = {-1, 2, 3, 3, 4, 5, 7, 9, 10, 67, 110};
             Sorting.MainClass.MergeSort(testArr);
             Sorting.MainClass.PrintArray(testArr);
             CollectionAssert.AreEqual(correct, testArr);

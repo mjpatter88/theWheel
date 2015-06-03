@@ -89,6 +89,9 @@ namespace Sorting
             //In order to allocate arrays of this size, we need to set the gcAllowVeryLargeObjects flag in the App.config file. 
             //Use some common powers of 2
             int[] sizes = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
+                           1048576, 2097152, 4194304, 8388608};
+
+            int[] sizes2 = {1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, //2^10 - 2^19
                            1048576, 2097152, 4194304, 8388608, 16777216, 33554432, 67108864, 134217728, 268435456, 536870912, //2^20 - 2^29
                            1073741824}; //2^30
             //Generate all the needed data first
@@ -263,7 +266,7 @@ namespace Sorting
 
             int leftIndex = start;
             int rightIndex = mid;
-            for (int index = 0; index < size; index++)
+            for (int index = start; index < end; index++)
             {
                 if(rightIndex >= end)
                 {
@@ -301,7 +304,51 @@ namespace Sorting
         /// <param name="arr"></param>
         public static void QuickSort(int[] arr)
         {
+            recQuickSort(arr, 0, arr.Length);
+        }
 
+        private static void recQuickSort(int[] arr, int start, int end)
+        {
+            // start is inclusive, end is non-inclusive.
+            int size = end - start;
+            int midInd = start + size / 2;
+
+            // It should never be negative
+            if(size <= 0)
+            {
+                throw new System.ArgumentException("Can't sort an array of 0 elements.");
+            }
+
+            // If there is only a single element or zero elements, it's already sorted.
+            if(size == 1 || size == 0)
+            {
+                return;
+            }
+
+            // Calculate pivot value - for now take median of first, last, middle
+            // TODO: better way to find the median...
+            int pivIndex;
+            int pivValue;
+            if((arr[start] >= arr[midInd] && arr[start] <= arr[end-1]) ||
+                (arr[start] <= arr[midInd] && arr[start] >= arr[end-1]))
+            {
+                pivIndex = start;
+                pivValue = arr[start];
+            }
+            else if((arr[midInd] >= arr[start] && arr[midInd] <= arr[end-1]) ||
+                (arr[midInd] <= arr[start] && arr[midInd] >= arr[end-1]))
+            {
+                pivIndex = midInd;
+                pivValue = arr[midInd];
+            }
+            else
+            {
+                pivIndex = end-1;
+                pivValue = arr[end-1];
+            }
+            System.Console.WriteLine("Piv Index: " + pivIndex + " Piv Value: " + pivValue);
+            // Partition
+            // Rec call
         }
         
 
