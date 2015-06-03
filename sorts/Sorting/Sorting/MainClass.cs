@@ -346,8 +346,10 @@ namespace Sorting
                 pivIndex = end-1;
                 pivValue = arr[end-1];
             }
-            System.Console.WriteLine("Piv Index: " + pivIndex + " Piv Value: " + pivValue);
-            // Partition
+            // System.Console.WriteLine("Piv Index: " + pivIndex + " Piv Value: " + pivValue);
+
+            // Partition the array so the numbers on the left < partValue and the nums on the right all >= partValu
+
             // Rec call
         }
         
@@ -417,7 +419,10 @@ namespace Sorting
         }
 
         /// <summary>
-        /// Returns true if an array is sorted, false otherwise.
+        /// Returns true if an array is sorted, false otherwise. 
+        /// Note: this doesn't really test that the sort worked correctly, since it doesn't compare the numbers 
+        /// with those in the original array. An array full of 0's would pass this test, 
+        /// but it is only meant as a quick sanity check not an actual unit test.
         /// </summary>
         /// <param name="arr"></param>
         /// <returns></returns>
