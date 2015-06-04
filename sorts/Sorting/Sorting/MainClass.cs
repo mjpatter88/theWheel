@@ -314,9 +314,9 @@ namespace Sorting
             int midInd = start + size / 2;
 
             // It should never be negative
-            if(size <= 0)
+            if(size < 0)
             {
-                throw new System.ArgumentException("Can't sort an array of 0 elements.");
+                throw new System.ArgumentException("Can't sort an array of less than 0 elements.");
             }
 
             // If there is only a single element or zero elements, it's already sorted.
@@ -325,32 +325,86 @@ namespace Sorting
                 return;
             }
 
+            // If there are only 2 elements, quicker to do it this way
+            if(size == 2)
+            {
+                if(arr[start] > arr[start+1])
+                {
+                    SwapNums(arr, start, start + 1);
+                }
+                return;
+            }
+
             // Calculate pivot value - for now take median of first, last, middle
             // TODO: better way to find the median...
-            int pivIndex;
-            int pivValue;
             if((arr[start] >= arr[midInd] && arr[start] <= arr[end-1]) ||
                 (arr[start] <= arr[midInd] && arr[start] >= arr[end-1]))
             {
-                pivIndex = start;
-                pivValue = arr[start];
+                // Do nothing here since it is already at index "start"
             }
             else if((arr[midInd] >= arr[start] && arr[midInd] <= arr[end-1]) ||
                 (arr[midInd] <= arr[start] && arr[midInd] >= arr[end-1]))
             {
-                pivIndex = midInd;
-                pivValue = arr[midInd];
+                SwapNums(arr, start, midInd);
             }
             else
             {
-                pivIndex = end-1;
-                pivValue = arr[end-1];
+                SwapNums(arr, start, end - 1);
             }
-            // System.Console.WriteLine("Piv Index: " + pivIndex + " Piv Value: " + pivValue);
 
             // Partition the array so the numbers on the left < partValue and the nums on the right all >= partValu
+            int pivIndex = Partition(arr, start, end);
 
-            // Rec call
+            // Optimization to handle duplicate numbers
+            int pivIndex2 = pivIndex;
+            while(pivIndex2 < end && arr[pivIndex] == arr[pivIndex2])
+            {
+                pivIndex2++;
+            }
+
+            // Rec calls
+            recQuickSort(arr, start, pivIndex);
+            recQuickSort(arr, pivIndex2, end);
+        }
+
+        /// <summary>
+        /// QuickSort helper function to partition the array.
+        /// The first value is treated as the pivot value.
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns>The index of the partition value after this step.</returns>
+        public static int Partition(int[] arr, int start, int end)
+        {
+            // Partition the array so the numbers on the left < partValue and the nums on the right all >= partValu
+            int leftMarker = start + 1; // Plus one to start after the pivot value which is always at index start
+            int rightMarker = end - 1;
+            int pivVal = arr[start];
+            while(leftMarker <= rightMarker)
+            {
+                // First move left marker to the right until an element > pivVal is found.
+                while(leftMarker < end && arr[leftMarker] < pivVal)
+                {
+                    leftMarker++;
+                }
+                // Then move right marker to the left until an element < pivVal is found.
+                while(rightMarker > start & arr[rightMarker] > pivVal)
+                {
+                    rightMarker--;
+                }
+                if(leftMarker < rightMarker)
+                {
+                    SwapNums(arr, leftMarker, rightMarker);
+                    leftMarker++;  // Fix an infinite loop bug where arr[left] == arr[right] == pivtoValue;
+                }
+                else
+                {
+                    SwapNums(arr, start, rightMarker);
+                    break;
+                }
+            }
+            return rightMarker; // Is this right??
         }
         
 
