@@ -1,12 +1,12 @@
 # theWheel
 The Wheel is a project aiming to reinvent algorithms and data structures for fun and education.
 It is very much a work in progress, and it likely always will be. As I hear about new algorithms or
-interesting data structures I will attempt to implement them myself to gain a better understanding
+interesting data structures, I will attempt to implement them myself to gain a better understanding
 of how they really work.
 
 Currently I have used C# for everything in this project, but I would like to expand into other languages in the future.
 
-The rest of this page provides links to each section of content and a small reference of websites that I've used
+The rest of this page provides links to each section of content and a small list of website references that I've used
 to come up with my list of algorithms and data structures. The items in the lists that are not links have not been implemented yet.
 
 <h2>Algorithms:</h2>
