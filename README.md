@@ -10,15 +10,15 @@ The rest of this page provides links to each section of content and a small list
 to come up with my list of algorithms and data structures. The items in the lists that are not links have not been implemented yet.
 
 <h2>Algorithms:</h2>
-  - <a href= "sorts/">Selection Sort</a>
-  - <a href= "sorts/">Insertion Sort</a>
-  - <a href= "sorts/">Bubble Sort</a>
-  - <a href= "sorts/">Merge Sort</a>
-  - <a href= "sorts/">Quicksort</a>
+  - <a href="sorts/">Selection Sort</a>
+  - <a href="sorts/">Insertion Sort</a>
+  - <a href="sorts/">Bubble Sort</a>
+  - <a href="sorts/">Merge Sort</a>
+  - <a href="sorts/">Quicksort</a>
   - Prime Testing
   - Prime Trial Division
   - Sieve of Eratosthenes
-  - Fibonacci
+  - <a href="fib/">Fibonacci</a>
   - Dynamic Programming, Memoization (with Project Euler examples)
   - Greedy
   - Divide and Conquer
