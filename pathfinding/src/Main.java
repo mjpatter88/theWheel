@@ -6,16 +6,25 @@
  *
  * Algorithms:
  * A*
- * Djikstra's
+ * Dijkstra's
+ * Breadth First Search
+ * Depth First Search
+ * Bellman-Ford
+ * Floyd-Warshall
+ * Johnson's
  *
  */
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -23,22 +32,70 @@ public class Main extends Application
 {
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World");
-            }
-        });
+        primaryStage.setTitle("Pathfinding");
 
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        // Set the layout of the window
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.requestFocus();
 
-        Scene scene = new Scene(root, 300, 250);
-        primaryStage.setTitle("Hello World");
+        // Add text and buttons
+        addTextAndButtons(grid);
+
+        // Add my custom canvas
+        Display display = new Display(630, 400);
+        grid.add(display, 0, 2, 4, 1);
+
+
+        Scene scene = new Scene(grid, 680, 570);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void addTextAndButtons(GridPane grid) {
+        Text title = new Text("Pathfinders: ");
+        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        HBox hbTitle = new HBox(10);
+        hbTitle.setAlignment(Pos.CENTER);
+        hbTitle.getChildren().add(title);
+        grid.add(hbTitle, 0, 0, 1, 1);
+
+        Button btnA = new Button("A*");
+        btnA.setMinWidth(150.0);
+        btnA.setMinHeight(50.0);
+        grid.add(btnA, 1, 0, 1, 1);
+
+        Button btnDijkstra = new Button("Dijkstra's");
+        btnDijkstra.setMinWidth(150.0);
+        btnDijkstra.setMinHeight(50.0);
+        grid.add(btnDijkstra, 2, 0, 1, 1);
+
+        Button btnBFS = new Button("Breadth First Search");
+        btnBFS.setMinWidth(150.0);
+        btnBFS.setMinHeight(50.0);
+        grid.add(btnBFS, 3, 0, 1, 1);
+
+        Button btnDFS = new Button("Depth First Search");
+        btnDFS.setMinWidth(150.0);
+        btnDFS.setMinHeight(50.0);
+        grid.add(btnDFS, 0, 1, 1, 1);
+
+        Button btnBellmanFord = new Button("Bellman-Ford");
+        btnBellmanFord.setMinWidth(150.0);
+        btnBellmanFord.setMinHeight(50.0);
+        grid.add(btnBellmanFord, 1, 1, 1, 1);
+
+        Button btnFloydWarshall = new Button("Floyd-Warshall");
+        btnFloydWarshall.setMinWidth(150.0);
+        btnFloydWarshall.setMinHeight(50.0);
+        grid.add(btnFloydWarshall, 2, 1, 1, 1);
+
+        Button btnJohnson = new Button("Johnson's");
+        btnJohnson.setMinWidth(150.0);
+        btnJohnson.setMinHeight(50.0);
+        grid.add(btnJohnson, 3, 1, 1, 1);
     }
 
     public static void main(String[] args) {

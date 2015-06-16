@@ -22,20 +22,22 @@ to come up with my list of algorithms and data structures. The items in the list
   - Dynamic Programming, Memoization (with Project Euler examples)
   - Greedy
   - Divide and Conquer
-  - Djikstra
+  - Djikstra's
   - A*
-  - Graph Search (BFS, DFS)
+  - Breadth First Search
+  - Depth First Search
+  - Bellman-Ford
+  - Floyd-Warshall
+  - Johnson's
   - Matching Algorithms?
   - Huffman coding?
   - Prim/Kruskal (Minimum Spanning Tree)
   - Binary Search
-  - Floyd--Warshall algorithm?
   - Convex Hull -- Graham Scan -- Monotone Chains algo?
   - Coordinate Compression?
   - Edmonds--Karp
   - Ford--Fulkerson
   - Dinie's algo
-  - Bellman-Ford
   - Hungarian algo
   - Tarjan's algo (strongly connected components)
   - Knuth-Morris-Pratt (string searching)
@@ -71,3 +73,4 @@ to come up with my list of algorithms and data structures. The items in the list
 
   Interesting links:
     - http://sorting.at/
+    - http://www.redblobgames.com/pathfinding/a-star/introduction.html
