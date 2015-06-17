@@ -41,15 +41,15 @@ public class Main extends Application
         grid.setPadding(new Insets(25, 25, 25, 25));
         grid.requestFocus();
 
-        // Add text and buttons
+        // Add text and algorithm buttons
         addTextAndButtons(grid);
 
-        // Add my custom canvas
-        Display display = new Display(630, 400);
+        // Create grid map and add custom canvas
+        GridMap map = new GridMap();
+        Display display = new Display(map);
         grid.add(display, 0, 2, 4, 1);
 
-
-        Scene scene = new Scene(grid, 680, 570);
+        Scene scene = new Scene(grid, 680, 630);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -96,6 +96,18 @@ public class Main extends Application
         btnJohnson.setMinWidth(150.0);
         btnJohnson.setMinHeight(50.0);
         grid.add(btnJohnson, 3, 1, 1, 1);
+
+        // Add loading and generating buttons
+        Button btnLoadMap = new Button("Load Map");
+        btnLoadMap.setMinWidth(150.0);
+        btnLoadMap.setMinHeight(50.0);
+        grid.add(btnLoadMap, 1, 3, 1, 1);
+
+        Button btnGenerateMap = new Button("Generate Map");
+        btnGenerateMap.setMinWidth(150.0);
+        btnGenerateMap.setMinHeight(50.0);
+        grid.add(btnGenerateMap, 2, 3, 1, 1);
+
     }
 
     public static void main(String[] args) {
