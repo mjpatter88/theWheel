@@ -7,6 +7,7 @@
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 
 public class Display extends Canvas
@@ -31,8 +32,8 @@ public class Display extends Canvas
         gc.setFill(Color.LIGHTGRAY);
         gc.fillRect(0, 0, getWidth(), getHeight());
 
-        // Draw the grid
-        gc.setStroke(Color.DARKCYAN);
+        // Draw the grid lines
+        gc.setStroke(Color.rgb(0, 149, 182, 1.0));
         gc.setLineWidth(1.0);
         // Horizontal Lines (plus borders)
         for(int i=0; i<map.numRows + 1; i++) {
@@ -46,5 +47,36 @@ public class Display extends Canvas
             double coord = 0.5 + (i * cellWidth);
             gc.strokeLine(coord, 0, coord, getHeight());
         }
+
+        // Draw the map features
+        for (int i = 0; i < map.numRows; i++) {
+            for (int j = 0; j < map.numCols; j++) {
+                if (map.cells[i][j].property == 'A') {
+                    // shade the cell bright blue
+                    paintCell(i, j, Color.rgb(0, 127, 255, 1.0));
+                } else if (map.cells[i][j].property == 'B') {
+                    // shade the cell bright gold
+                    paintCell(i, j, Color.rgb(255, 240, 0, 1.0));
+                } else if (map.cells[i][j].property == 'W') {
+                    // shade the cell dark gray/brown
+                    paintCell(i, j, Color.rgb(79, 58, 60, 1.0));
+                } else {
+                    // shade the cell based on the "time" value (shades of brown)
+                    int time = map.cells[i][j].time;
+                    if (time > 1) {
+                        double opacity = 0.1 * map.cells[i][j].time;
+                        paintCell(i, j, Color.rgb(100, 65, 23, opacity));
+                    }
+                }
+            }
+        }
+    }
+
+    private void paintCell(int rowNum, int colNum, Paint color) {
+        GraphicsContext gc = getGraphicsContext2D();
+        double topLeftY = 1 + (rowNum * cellHeight); // Add 1.5 to not overwrite the border
+        double topLeftX = 1 + (colNum * cellWidth);
+        gc.setFill(color);
+        gc.fillRect(topLeftX, topLeftY, cellWidth - 1, cellHeight - 1); // Sub 1 to not overwrite the border
     }
 }

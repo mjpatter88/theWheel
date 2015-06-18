@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Simple map: Each cell has a value, that is the "time" to enter/exit that cell
  * Complex map: Each cell has 4 values, those are the "time" to cross left, top, right, and bottom edges respectively.
  *
- * A value of "0" represents a wall that is impassable.
+ * A value of "W" represents a wall that is impassable.
  * A value of "A" is the source.
  * A value of "B" is the destination.
  */
@@ -65,6 +65,8 @@ public class GridMap {
                 }
                 else if(val.equals("B")) {
                     cells[rowIndex][colIndex] = new Cell('B');
+                } else if (val.equals("W")) {
+                    cells[rowIndex][colIndex] = new Cell('W');
                 }
                 else {
                     int time = Integer.parseInt(val);
@@ -115,6 +117,4 @@ public class GridMap {
         }
         return toReturn;
     }
-
-
 }
