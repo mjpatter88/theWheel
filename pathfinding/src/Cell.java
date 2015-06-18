@@ -5,6 +5,7 @@
  */
 public class Cell {
     int time;
+    char property;
 
     public Cell() {
         time = 1;
@@ -12,10 +13,22 @@ public class Cell {
 
     public Cell(int time) {
         this.time = time;
+        this.property = 0;
+    }
+
+    public Cell(char property) {
+        this.property = property;
     }
 
     @Override
     public String toString() {
-        return "" + time;
+        String toRet = "";
+        if(property != 0) {
+            toRet += property;
+        }
+        else {
+            toRet += time;
+        }
+        return toRet;
     }
 }

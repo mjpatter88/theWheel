@@ -59,8 +59,17 @@ public class GridMap {
                 }
                 int rowIndex = Integer.parseInt(line.substring(line.indexOf('<') + 1, line.indexOf(',')));
                 int colIndex = Integer.parseInt(line.substring(line.indexOf(',') + 1, line.indexOf('>')));
-                int time = Integer.parseInt(line.substring(line.indexOf(' ') + 1));
-                cells[rowIndex][colIndex] = new Cell(time);
+                String val = line.substring(line.indexOf(' ') + 1);
+                if(val.equals("A")) {
+                    cells[rowIndex][colIndex] = new Cell('A');
+                }
+                else if(val.equals("B")) {
+                    cells[rowIndex][colIndex] = new Cell('B');
+                }
+                else {
+                    int time = Integer.parseInt(val);
+                    cells[rowIndex][colIndex] = new Cell(time);
+                }
             }
         }
         catch (FileNotFoundException e) {
