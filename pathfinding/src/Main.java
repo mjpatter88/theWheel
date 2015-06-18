@@ -45,7 +45,8 @@ public class Main extends Application
         addTextAndButtons(grid);
 
         // Create grid map and add custom canvas
-        GridMap map = new GridMap();
+        GridMap map = new GridMap("DefaultMap.txt");
+        System.out.println(map);
         Display display = new Display(map);
         grid.add(display, 0, 2, 4, 1);
 

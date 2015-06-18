@@ -21,7 +21,6 @@ public class Display extends Canvas
         // +1 is needed to have room for the border all the way around
         this.setHeight((cellHeight * map.numRows) + 1);
         this.setWidth((cellWidth * map.numCols) + 1);
-        System.out.println(getWidth());
         init();
     }
 
