@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.util.ArrayList;
+
 
 public class Display extends Canvas
 {
@@ -70,6 +72,10 @@ public class Display extends Canvas
                 }
             }
         }
+    }
+
+    public void paintPath(ArrayList<Cell> path) {
+
     }
 
     private void paintCell(int rowNum, int colNum, Paint color) {

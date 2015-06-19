@@ -9,6 +9,7 @@ public class Cell {
 
     public Cell() {
         time = 1;
+        this.property = 0;
     }
 
     public Cell(int time) {

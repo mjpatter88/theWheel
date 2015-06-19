@@ -100,7 +100,7 @@ public class GridMap {
         cells = new Cell[numRows][numCols];
         for(int i=0; i<numRows; i++) {
             for(int j=0; j<numCols; j++) {
-                cells[i][j] = new Cell(1); // Default cell value
+                cells[i][j] = new Cell(); // Default cell value
             }
         }
     }

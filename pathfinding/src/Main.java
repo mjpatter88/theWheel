@@ -16,6 +16,7 @@
  */
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,8 +29,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+
 public class Main extends Application
 {
+    Display display;
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Pathfinding");
@@ -47,7 +50,7 @@ public class Main extends Application
         // Create grid map and add custom canvas
         GridMap map = new GridMap("DefaultMap.txt");
         System.out.println(map);
-        Display display = new Display(map);
+        display = new Display(map);
         grid.add(display, 0, 2, 4, 1);
 
         Scene scene = new Scene(grid, 680, 630);
@@ -66,36 +69,57 @@ public class Main extends Application
         Button btnA = new Button("A*");
         btnA.setMinWidth(150.0);
         btnA.setMinHeight(50.0);
+        btnA.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.aStar(display.map));
+        });
         grid.add(btnA, 1, 0, 1, 1);
 
         Button btnDijkstra = new Button("Dijkstra's");
         btnDijkstra.setMinWidth(150.0);
         btnDijkstra.setMinHeight(50.0);
+        btnDijkstra.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.dijkstra(display.map));
+        });
         grid.add(btnDijkstra, 2, 0, 1, 1);
 
         Button btnBFS = new Button("Breadth First Search");
         btnBFS.setMinWidth(150.0);
         btnBFS.setMinHeight(50.0);
+        btnBFS.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.breadthFirstSearch(display.map));
+        });
         grid.add(btnBFS, 3, 0, 1, 1);
 
         Button btnDFS = new Button("Depth First Search");
         btnDFS.setMinWidth(150.0);
         btnDFS.setMinHeight(50.0);
+        btnDFS.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.depthFirstSearch(display.map));
+        });
         grid.add(btnDFS, 0, 1, 1, 1);
 
         Button btnBellmanFord = new Button("Bellman-Ford");
         btnBellmanFord.setMinWidth(150.0);
         btnBellmanFord.setMinHeight(50.0);
+        btnBellmanFord.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.bellmanFord(display.map));
+        });
         grid.add(btnBellmanFord, 1, 1, 1, 1);
 
         Button btnFloydWarshall = new Button("Floyd-Warshall");
         btnFloydWarshall.setMinWidth(150.0);
         btnFloydWarshall.setMinHeight(50.0);
+        btnFloydWarshall.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.floydWarshall(display.map));
+        });
         grid.add(btnFloydWarshall, 2, 1, 1, 1);
 
         Button btnJohnson = new Button("Johnson's");
         btnJohnson.setMinWidth(150.0);
         btnJohnson.setMinHeight(50.0);
+        btnJohnson.setOnAction((ActionEvent e) -> {
+            display.paintPath(Algorithms.johnson(display.map));
+        });
         grid.add(btnJohnson, 3, 1, 1, 1);
 
         // Add loading and generating buttons
