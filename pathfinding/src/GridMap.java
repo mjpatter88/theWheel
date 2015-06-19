@@ -61,16 +61,16 @@ public class GridMap {
                 int colIndex = Integer.parseInt(line.substring(line.indexOf(',') + 1, line.indexOf('>')));
                 String val = line.substring(line.indexOf(' ') + 1);
                 if(val.equals("A")) {
-                    cells[rowIndex][colIndex] = new Cell('A');
+                    cells[rowIndex][colIndex] = new Cell('A', rowIndex, colIndex);
                 }
                 else if(val.equals("B")) {
-                    cells[rowIndex][colIndex] = new Cell('B');
+                    cells[rowIndex][colIndex] = new Cell('B', rowIndex, colIndex);
                 } else if (val.equals("W")) {
-                    cells[rowIndex][colIndex] = new Cell('W');
+                    cells[rowIndex][colIndex] = new Cell('W', rowIndex, colIndex);
                 }
                 else {
                     int time = Integer.parseInt(val);
-                    cells[rowIndex][colIndex] = new Cell(time);
+                    cells[rowIndex][colIndex] = new Cell(time, rowIndex, colIndex);
                 }
             }
         }
@@ -100,7 +100,7 @@ public class GridMap {
         cells = new Cell[numRows][numCols];
         for(int i=0; i<numRows; i++) {
             for(int j=0; j<numCols; j++) {
-                cells[i][j] = new Cell(); // Default cell value
+                cells[i][j] = new Cell(i, j); // Default cell value
             }
         }
     }

@@ -6,19 +6,27 @@
 public class Cell {
     int time;
     char property;
+    int rowIndex;
+    int colIndex;
 
-    public Cell() {
+    public Cell(int rowIndex, int colIndex) {
         time = 1;
         this.property = 0;
+        this.rowIndex = rowIndex;
+        this.colIndex = colIndex;
     }
 
-    public Cell(int time) {
+    public Cell(int time, int rowIndex, int colIndex) {
         this.time = time;
         this.property = 0;
+        this.rowIndex = rowIndex;
+        this.colIndex = colIndex;
     }
 
-    public Cell(char property) {
+    public Cell(char property, int rowIndex, int colIndex) {
         this.property = property;
+        this.rowIndex = rowIndex;
+        this.colIndex = colIndex;
     }
 
     @Override

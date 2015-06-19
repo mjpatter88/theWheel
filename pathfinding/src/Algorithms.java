@@ -7,7 +7,13 @@ import java.util.ArrayList;
 public class Algorithms {
     public static ArrayList<Cell> aStar(GridMap map) {
         System.out.println("A*");
-        return null;
+        ArrayList<Cell> path = new ArrayList<Cell>();
+        path.add(map.cells[0][1]);
+        path.add(map.cells[0][2]);
+        path.add(map.cells[0][3]);
+        path.add(map.cells[0][4]);
+        path.add(map.cells[0][5]);
+        return path;
     }
 
     public static ArrayList<Cell> dijkstra(GridMap map) {

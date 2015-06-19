@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class Display extends Canvas
@@ -75,7 +76,14 @@ public class Display extends Canvas
     }
 
     public void paintPath(ArrayList<Cell> path) {
+        Iterator<Cell> iter = path.iterator();
+        while (iter.hasNext()) {
+            paintCell(iter.next(), Color.rgb(255, 117, 24, 1.0));
+        }
+    }
 
+    private void paintCell(Cell cell, Paint color) {
+        paintCell(cell.rowIndex, cell.colIndex, color);
     }
 
     private void paintCell(int rowNum, int colNum, Paint color) {
